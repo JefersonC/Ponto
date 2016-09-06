@@ -1,4 +1,4 @@
-body{
+body, .collapsible-body{
     background: #f2f2f2;
 }
 section{
@@ -12,11 +12,12 @@ section{
 section#home{
     top: 0;
     left: 0;
-    background: #091926
+    background: #091926;
 }
 section#relatorio{
     top: 100%;
     left: 0;
+    background: #00bcd4;    
 }
 
 .no-margin{
@@ -35,4 +36,43 @@ section#relatorio{
 
 .collapsible-body p{
     padding: 8px;
+}
+
+ul{
+    z-index: 1;
+}
+.calendar-navigation{
+    z-index: 2;
+    margin: -16px -16px 0 -16px;
+    padding: 8px 16px;
+    height: 70px;
+    width: calc(100% + 32px);
+    text-align: center;
+    font-weight: bold;
+    position: relative;
+}
+.calendar-navigation a{
+    position: absolute;
+    font-size: 1.5em;
+    height: 70px;
+    width: 70px;
+    text-align: center;
+    line-height: 70px;
+    margin: -8px 0;
+    cursor: pointer;
+}
+.calendar-navigation a.left{
+    left: 0;
+}
+.calendar-navigation a.right{
+    right: 0;
+}
+
+.calendar-container{
+    position: absolute;
+    height: calc(100% - 70px);
+    width: 100%;
+    padding: 16px;
+    margin: 0 -16px;
+    overflow-y: scroll
 }
