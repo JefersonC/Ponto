@@ -76,3 +76,38 @@ ul{
     margin: 0 -16px;
     overflow-y: scroll
 }
+
+
+/* slide in from the bottom */
+/*@keyframes leave {
+    from { margin-left: 0 }
+    to { margin-left: -100%; }
+}*/
+
+@keyframes leave {
+    from { left: 0 }
+    to { left: -100%; }  
+}
+
+@keyframes enter {
+    from { left: 100%}
+    to { left: 0; }  
+}
+
+#ponto-container.ng-leave, 
+#ponto-container.ng-enter{ 
+    overflow: hidden !important;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+#ponto-container.ng-leave{
+    animation: leave .3s ease; 
+    /*z-index: 9999;*/    
+}
+#ponto-container.ng-enter{
+    animation: enter .3s ease; 
+    /*z-index: -9999;*/ 
+}
