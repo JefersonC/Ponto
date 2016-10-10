@@ -7,8 +7,9 @@ class model {
     private $host = 'localhost';
     private $user = 'root';
     private $pass = '';
-    private $db = 'money';
+    private $db = 'ponto';
     private $conn;
+    private $values = [];
     private $sql;
     private $table;
     private $properties = [];
@@ -17,7 +18,9 @@ class model {
     function __construct() {
 
         try {
-            $this->conn = new \PDO('mysql:host=' . $this->host . ';dbname=' . $this->db . ';charset=utf8', $this->user, $this->pass);
+            $this->conn = new \PDO('mysql:host=' . $this->host . ';dbname=' . $this->db . ';charset=utf8', $this->user, $this->pass, array(
+                \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION
+            ));
         } catch (PDOException $e) {
             debug($e);
         }
@@ -75,7 +78,6 @@ class model {
         }
 
         $this->sql .= " FROM " . $this->table;
-
         return $this;
     }
 
@@ -141,10 +143,11 @@ class model {
 
             $query = '';
             foreach ($condition as $k => $v) {
-                $query .= ' ' . str_replace('?', $v, $k) . ', ' . $method;
+                $query .= ' ' . $k . ' ' . $method;
+                $this->values[] = $v;
             }
 
-            $len = strlen($method) + 2;
+            $len = strlen($method) + 1;
 
             $this->sql .= substr($query, 0, $len * -1);
         } else {
@@ -165,10 +168,13 @@ class model {
     }
 
     protected function exec($fetch = NULL, $fethMethod = \PDO::FETCH_ASSOC) {
-
-        $query = str_replace(';', '', $this->sql) . ';';
-
-        $exec = $this->conn->query($query);
+        
+        try{
+        $exec = $this->conn->prepare($this->sql);
+        $exec->execute($this->values);
+        }catch(Exception $e){
+            debug($e);
+        }
 
         $rs = null;
 
@@ -186,7 +192,11 @@ class model {
         $this->properties['error'] = $exec->errorCode();
         $this->error = $exec->errorInfo();
 
-        return $rs;
+        if (empty($this->error)) {
+            return $rs;
+        } else {
+            return false;
+        }
     }
 
     public function getError() {

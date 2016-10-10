@@ -76,3 +76,23 @@ ul{
     margin: 0 -16px;
     overflow-y: scroll
 }
+
+
+/* slide in from the bottom */
+/*@keyframes leave {
+    from { margin-left: 0 }
+    to { margin-left: -100%; }
+}*/
+
+@keyframes enter {
+    from { margin-left: 100% }
+    to { margin-left: 0; }  
+}
+#ponto-container.ng-enter{ 
+    animation: enter 1s ease; 
+    z-index: 8888; 
+}
+/*#ponto-container.ng-leave{ 
+    animation: leave 1s ease; 
+    z-index: 9999; 
+}*/
