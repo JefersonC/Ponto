@@ -89,6 +89,16 @@ function __construct() {
         $this->sql = "DELETE FROM " . $this->table;
         return $this;
     }
+    
+    protected function join($args = array(), $type = 'LEFT') {
+
+        $query = ' ' . $type . ' JOIN ' . $args['table'] . ' ON ' . $args['cond'];
+
+        $this->sql .= $query;
+
+        return $this;
+    }
+    
     /**
      * Método para montar a cláusula WHERE seguindo padrões MySQl
      *  
@@ -145,7 +155,7 @@ function __construct() {
         }
         $this->properties['rowCount'] = $exec->rowCount();
         $this->properties['lastId'] = $this->conn->lastInsertId();
-        $this->properties['error'] = $exec->errorCode();
+        $this->properties['error'] = (int) $exec->errorCode();
         $this->error = $exec->errorInfo();
         return $rs;
     }

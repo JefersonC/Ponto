@@ -8,13 +8,13 @@ $provide.value("$locale", {
       "PM"
     ],
     "DAY": [
-      "domingo",
-      "segunda-feira",
-      "ter\u00e7a-feira",
-      "quarta-feira",
-      "quinta-feira",
-      "sexta-feira",
-      "s\u00e1bado"
+      "Domingo",
+      "Segunda",
+      "Ter\u00e7a",
+      "Quarta",
+      "Quinta",
+      "Sexta",
+      "S\u00e1bado"
     ],
     "ERANAMES": [
       "Antes de Cristo",

@@ -22,7 +22,7 @@ class user extends model implements \interfaces\model {
         $rs = $this->select($s)->where($w)->exec('ROW');
 
         if (!empty($rs['id'])) {
-            setcookie('user', $rs['id'], time() + 3600);
+            setcookie('user', $rs['id'], (time() + (15 * 24 * 3600)), '/');
             return true;
         }
         return false;
@@ -37,5 +37,26 @@ class user extends model implements \interfaces\model {
         setcookie("user", false, time() - 1);
         return true;
     }
+    
+     public function getCargaHoraria() {
+        if(empty($_COOKIE['user'])){
+            throw new \Exception('Token inválido, por favor relogue-se');
+        }
+        
+        $this->setTable('usuario u');
+        $s = ('c.cargaHoraria');
+        $j = array(
+            'table' => 'cargo c',
+            'cond' => 'u.idCargo = c.id'
+        );
+        $w = array(
+            'u.id = ?' => $_COOKIE['user']
+        );
+        
+        $rs = $this->select($s)->join($j)->where($w)->exec('ROW');
+        
+        return $rs['cargaHoraria'];
+    }
+    
 
 }
